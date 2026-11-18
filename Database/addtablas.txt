@@ -1,0 +1,28 @@
+CREATE TABLE usuarios (
+    id BIGSERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE viajes (
+    id BIGSERIAL PRIMARY KEY,
+    origen VARCHAR(80) NOT NULL,
+    destino VARCHAR(80) NOT NULL,
+    fecha_salida TIMESTAMP NOT NULL,
+    precio NUMERIC(10,2) NOT NULL,
+    asientos_disponibles INT NOT NULL
+);
+
+CREATE TABLE reservas (
+    id BIGSERIAL PRIMARY KEY,
+    usuario_id BIGINT REFERENCES usuarios(id),
+    viaje_id BIGINT REFERENCES viajes(id),
+    asientos INT NOT NULL,
+    creada_en TIMESTAMP DEFAULT NOW()
+);
+
+INSERT INTO viajes (origen, destino, fecha_salida, precio, asientos_disponibles)
+VALUES
+('Ciudad de México', 'Guanajuato', '2026-12-10 08:00', 450.00, 40),
+('Guadalajara', 'Puerto Vallarta', '2026-12-11 07:30', 520.00, 40);
